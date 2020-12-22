@@ -1,0 +1,145 @@
+{
+	"threads": 4,
+	"coin": "btc",
+
+	"log": {
+		"logSetLevel": 10
+	},
+
+	"cluster": [
+		{
+			"nodeName": "pool1",
+			"nodeId": 1,
+			"nodeIp": "172.24.146.33"
+		},
+		{
+			"nodeName": "pool2",
+			"nodeId": 2,
+			"nodeIp": "172.24.146.37"
+		},
+		{
+			"nodeName": "test-pool1",
+			"nodeId": 999,
+			"nodeIp": "192.168.110.15"
+		}
+	],
+
+	"proxy": {
+		"enabled": true,
+		"listen": "0.0.0.0:8888",
+		"limitHeadersSize": 1024,
+		"limitBodySize": 256,
+		"behindReverseProxy": false,
+		"blockRefreshInterval": "200ms",
+		"blockTemplateInterval": "10s",
+		"stateUpdateInterval": "3s",
+		"difficulty": 90000000,
+		"hashrateExpiration": "3h",
+
+		"healthCheck": true,
+		"maxFails": 100,
+
+		"stratum": {
+			"enabled": true,
+			"listen": "0.0.0.0:8008",
+			"timeout": "60s",
+			"maxConn": 8192
+		},
+
+		"diffAdjust":{
+			"enabled": false,
+			"adjustInv": "60s",
+			"expectShareCount": 5
+		},
+
+		"policy": {
+			"workers": 8,
+			"resetInterval": "60m",
+			"refreshInterval": "1m",
+
+			"banning": {
+				"enabled": false,
+				"ipset": "blacklist",
+				"timeout": 1800,
+				"invalidPercent": 30,
+				"checkThreshold": 100,
+				"malformedLimit": 5
+			},
+			"limits": {
+				"enabled": false,
+				"limit": 30,
+				"grace": "5m",
+				"limitJump": 10
+			}
+		}
+	},
+
+	"api": {
+		"enabled": true,
+		"purgeOnly": false,
+		"purgeInterval": "10m",
+		"listen": "0.0.0.0:8080",
+		"statsCollectInterval": "10s",
+		"hashrateWindow": "30m",
+		"hashrateLargeWindow": "3h",
+		"luckWindow": [64, 128, 256],
+		"payments": 30,
+		"blocks": 50
+	},
+
+	"upstreamCheckInterval": "5s",
+	"upstreamCoinBaseEncrypted": "X/anuih86ocszNESCwJw+KCDe1wce+1Dk7Q4zCBE9a/lnCwydhF7gSkmHvcdwPjk",
+	"upstream": [
+		{
+			"name": "main",
+			"url": "http://a:b@192.168.1.124:38990",
+			"timeout": "10s"
+		},
+		{
+			"name": "backup",
+			"url": "http://a:b@192.168.1.124:38990",
+			"timeout": "10s"
+		}
+	],
+
+	"redis": {
+		"endpoint": "192.168.1.124:6379",
+		"poolSize": 10,
+		"database": 0,
+		"passwordEncrypted": "m0lxCSrfYVhmOhZcOhICrw=="
+	},
+
+	"unlocker": {
+		"enabled": true,
+		"poolFee": 1.0,
+		"poolFeeAddress": "",
+		"donate": false,
+		"depth": 6,
+		"immatureDepth": 3,
+		"keepTxFees": false,
+		"interval": "10m",
+		"daemon": "http://a:b@192.168.1.124:38990",
+		"timeout": "10s"
+	},
+
+	"payouts": {
+		"enabled": false,
+		"requirePeers": 25,
+		"interval": "120m",
+		"daemon": "http://a:b@192.168.1.124:38990",
+		"timeout": "10s",
+		"address": "0x0",
+		"gas": "21000",
+		"gasPrice": "50000000000",
+		"autoGas": true,
+		"threshold": 500000000,
+		"bgsave": false
+	},
+
+	"coinbaseExtraData": "/btcpool/",
+
+	"newrelicEnabled": false,
+	"newrelicName": "MyEtherProxy",
+	"newrelicKey": "SECRET_KEY",
+	"newrelicVerbose": false
+}
