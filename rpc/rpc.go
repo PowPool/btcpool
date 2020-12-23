@@ -45,15 +45,16 @@ type MasterNode struct {
 }
 
 type GetBlockTemplateReplyPart struct {
-	Version           uint32                `json:"version"`
-	PreviousBlockHash string                `json:"previousblockhash"`
-	Transactions      []BlockTplTransaction `json:"transactions"`
-	CoinBaseAux       CoinBaseAux           `json:"coinbaseaux"`
-	CoinBaseValue     int64                 `json:"coinbasevalue"`
-	CurTime           uint32                `json:"curtime"`
-	Bits              string                `json:"bits"`
-	Target            string                `json:"target"`
-	Height            uint32                `json:"height"`
+	Version                  uint32                `json:"version"`
+	PreviousBlockHash        string                `json:"previousblockhash"`
+	Transactions             []BlockTplTransaction `json:"transactions"`
+	CoinBaseAux              CoinBaseAux           `json:"coinbaseaux"`
+	CoinBaseValue            int64                 `json:"coinbasevalue"`
+	CurTime                  uint32                `json:"curtime"`
+	Bits                     string                `json:"bits"`
+	Target                   string                `json:"target"`
+	Height                   uint32                `json:"height"`
+	DefaultWitnessCommitment string                `json:"default_witness_commitment"`
 }
 
 const receiptStatusSuccessful = "0x1"

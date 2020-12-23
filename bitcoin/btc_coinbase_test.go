@@ -37,7 +37,7 @@ func TestPackString(t *testing.T) {
 func TestInitialize(t *testing.T) {
 	var cbtx CoinBaseTransaction
 	_ = cbtx.Initialize("XiB2rj7PdESyaxJVsnmjhXf9D9bYJjX7ob", 1607055201, 1827, 18492529212, "",
-		"btcpool")
+		"btcpool", "6a24aa21a9ed2607916dfc80dc54aefa568f2161355625d23e063e38445c6887c01cfa995b95")
 
 	extraNonce1 := []byte{0x0, 0x0, 0x0, 0x0}
 	extraNonce2 := []byte{0x0, 0x0, 0x0, 0x0}
@@ -67,7 +67,7 @@ func TestInitialize(t *testing.T) {
 func TestRecoverToRawTransaction(t *testing.T) {
 	var cbtx CoinBaseTransaction
 	_ = cbtx.Initialize("XiB2rj7PdESyaxJVsnmjhXf9D9bYJjX7ob", 1607055201, 1827, 18492529212, "",
-		"btcpool")
+		"btcpool", "6a24aa21a9ed2607916dfc80dc54aefa568f2161355625d23e063e38445c6887c01cfa995b95")
 
 	extraNonce1Hex := "00000000"
 	extraNonce2Hex := "00000000"

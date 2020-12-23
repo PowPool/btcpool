@@ -16,14 +16,15 @@ import (
 )
 
 type BlockTemplateJob struct {
-	BlkTplJobId    string
-	BlkTplJobTime  uint32
-	TxIdList       []string
-	MerkleBranch   []string
-	CoinBase1      string
-	CoinBase2      string
-	CoinBaseValue  int64
-	JobTxsFeeTotal int64
+	BlkTplJobId              string
+	BlkTplJobTime            uint32
+	TxIdList                 []string
+	MerkleBranch             []string
+	CoinBase1                string
+	CoinBase2                string
+	CoinBaseValue            int64
+	JobTxsFeeTotal           int64
+	DefaultWitnessCommitment string
 }
 
 type BlockTemplate struct {
@@ -126,7 +127,7 @@ func (s *ProxyServer) fetchBlockTemplate() {
 
 	var coinBaseTx bitcoin.CoinBaseTransaction
 	err = coinBaseTx.Initialize(s.config.UpstreamCoinBase, newTplJob.BlkTplJobTime, newTpl.Height, coinBaseReward,
-		blkTplReply.CoinBaseAux.Flags, s.config.CoinBaseExtraData)
+		blkTplReply.CoinBaseAux.Flags, s.config.CoinBaseExtraData, blkTplReply.DefaultWitnessCommitment)
 	if err != nil {
 		Error.Printf("Error while initialize coinbase transaction on %s: %s", rpcClient.Name, err)
 		return
@@ -139,6 +140,8 @@ func (s *ProxyServer) fetchBlockTemplate() {
 		newTplJob.JobTxsFeeTotal += tx.Fee
 	}
 	newTplJob.BlkTplJobId = hex.EncodeToString(utility.Sha256(coinBaseTx.CoinBaseTx1))[0:16]
+
+	newTplJob.DefaultWitnessCommitment = blkTplReply.DefaultWitnessCommitment
 
 	newTpl.lastBlkTplId = newTplJob.BlkTplJobId
 	newTpl.BlockTplJobMap[newTplJob.BlkTplJobId] = newTplJob
