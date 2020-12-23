@@ -6,7 +6,7 @@ import (
 )
 
 func TestAe64Encode(t *testing.T) {
-	src := []byte("yambfpk3cat4eA7PAXD1a8dqEZzGkiDrZ5")
+	src := []byte("2MtvUt1KX5FQdJu1mCB9UvoYMYPNTJLcRQa")
 	src2 := []byte("12345678")
 	key := []byte("12345678")
 	dst, _ := Ae64Encode(src, key)
@@ -16,7 +16,7 @@ func TestAe64Encode(t *testing.T) {
 }
 
 func TestAe64Decode(t *testing.T) {
-	src := "X/anuih86ocszNESCwJw+KCDe1wce+1Dk7Q4zCBE9a/lnCwydhF7gSkmHvcdwPjk"
+	src := "akIwIjNtWSdAa1tVcXPIbuEvWfEXB4EVgP84snDK/UhbTjjTcOLQ3hWdpXiIBaSe"
 	src2 := "m0lxCSrfYVhmOhZcOhICrw=="
 	key := []byte("12345678")
 	orgi, _ := Ae64Decode(src, key)
