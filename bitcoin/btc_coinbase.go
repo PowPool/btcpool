@@ -269,6 +269,11 @@ func (t *CoinBaseTransaction) _generateCoinB() error {
 
 	// pack DefaultWitnessCommitment
 	if len(t.DefaultWitnessCommitment) != 0 {
+		err = serialize.PackInt64(writer, 0)
+		if err != nil {
+			return err
+		}
+
 		var scriptWitnessPubKey script.Script
 		scriptWitnessPubKey.SetScriptBytes(t.DefaultWitnessCommitment)
 		err = scriptWitnessPubKey.Pack(writer)
