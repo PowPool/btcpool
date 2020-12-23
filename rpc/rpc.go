@@ -34,7 +34,7 @@ type CoinBaseAux struct {
 
 type BlockTplTransaction struct {
 	Data string `json:"data"`
-	Hash string `json:"hash"`
+	TxId string `json:"txid"`
 	Fee  int64  `json:"fee"`
 }
 

@@ -109,7 +109,7 @@ func (s *ProxyServer) fetchBlockTemplate() {
 	var newTplJob BlockTemplateJob
 	newTplJob.BlkTplJobTime = blkTplReply.CurTime
 	for _, tx := range blkTplReply.Transactions {
-		newTplJob.TxIdList = append(newTplJob.TxIdList, tx.Hash)
+		newTplJob.TxIdList = append(newTplJob.TxIdList, tx.TxId)
 	}
 	newTplJob.MerkleBranch, err = bitcoin.GetMerkleBranchHexFromTxIdsWithoutCoinBase(newTplJob.TxIdList)
 	if err != nil {
@@ -143,7 +143,7 @@ func (s *ProxyServer) fetchBlockTemplate() {
 	newTpl.lastBlkTplId = newTplJob.BlkTplJobId
 	newTpl.BlockTplJobMap[newTplJob.BlkTplJobId] = newTplJob
 	for _, tx := range blkTplReply.Transactions {
-		newTpl.TxDetailMap[tx.Hash] = tx.Data
+		newTpl.TxDetailMap[tx.TxId] = tx.Data
 	}
 
 	s.blockTemplate.Store(&newTpl)
