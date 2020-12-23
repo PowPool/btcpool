@@ -54,8 +54,6 @@ type GetBlockTemplateReplyPart struct {
 	Bits              string                `json:"bits"`
 	Target            string                `json:"target"`
 	Height            uint32                `json:"height"`
-	CoinbasePayload   string                `json:"coinbase_payload"`
-	MasterNodes       []MasterNode          `json:"masternode"`
 }
 
 const receiptStatusSuccessful = "0x1"
@@ -122,7 +120,9 @@ func (r *RPCClient) GetPrevBlockHash() (string, error) {
 }
 
 func (r *RPCClient) GetPendingBlock() (*GetBlockTemplateReplyPart, error) {
-	rpcResp, err := r.doPost(r.Url, "getblocktemplate", []string{})
+	param := make(map[string][]string)
+	param["rules"] = []string{"segwit"}
+	rpcResp, err := r.doPost(r.Url, "getblocktemplate", []interface{}{param})
 	if err != nil {
 		return nil, err
 	}

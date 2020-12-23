@@ -118,9 +118,6 @@ func (s *ProxyServer) fetchBlockTemplate() {
 	}
 
 	coinBaseReward := blkTplReply.CoinBaseValue
-	for _, masterNode := range blkTplReply.MasterNodes {
-		coinBaseReward -= masterNode.Amount
-	}
 
 	if coinBaseReward <= 0 {
 		Error.Printf("Invalid block template, coinBaseReward <= 0")
@@ -129,7 +126,7 @@ func (s *ProxyServer) fetchBlockTemplate() {
 
 	var coinBaseTx bitcoin.CoinBaseTransaction
 	err = coinBaseTx.Initialize(s.config.UpstreamCoinBase, newTplJob.BlkTplJobTime, newTpl.Height, coinBaseReward,
-		blkTplReply.CoinBaseAux.Flags, blkTplReply.CoinbasePayload, s.config.CoinBaseExtraData, blkTplReply.MasterNodes)
+		blkTplReply.CoinBaseAux.Flags, s.config.CoinBaseExtraData)
 	if err != nil {
 		Error.Printf("Error while initialize coinbase transaction on %s: %s", rpcClient.Name, err)
 		return

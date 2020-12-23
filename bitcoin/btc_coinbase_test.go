@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/hex"
 	"fmt"
-	"github.com/MiningPool0826/btcpool/rpc"
 	"github.com/mutalisk999/bitcoin-lib/src/transaction"
 	"io"
 	"testing"
@@ -38,8 +37,7 @@ func TestPackString(t *testing.T) {
 func TestInitialize(t *testing.T) {
 	var cbtx CoinBaseTransaction
 	_ = cbtx.Initialize("XiB2rj7PdESyaxJVsnmjhXf9D9bYJjX7ob", 1607055201, 1827, 18492529212, "",
-		"02002307000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-		"btcpool", []rpc.MasterNode{})
+		"btcpool")
 
 	extraNonce1 := []byte{0x0, 0x0, 0x0, 0x0}
 	extraNonce2 := []byte{0x0, 0x0, 0x0, 0x0}
@@ -69,8 +67,7 @@ func TestInitialize(t *testing.T) {
 func TestRecoverToRawTransaction(t *testing.T) {
 	var cbtx CoinBaseTransaction
 	_ = cbtx.Initialize("XiB2rj7PdESyaxJVsnmjhXf9D9bYJjX7ob", 1607055201, 1827, 18492529212, "",
-		"02002307000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-		"btcpool", []rpc.MasterNode{})
+		"btcpool")
 
 	extraNonce1Hex := "00000000"
 	extraNonce2Hex := "00000000"

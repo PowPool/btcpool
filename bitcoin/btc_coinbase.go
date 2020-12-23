@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/hex"
 	"errors"
-	"github.com/MiningPool0826/btcpool/rpc"
 	"github.com/mutalisk999/bitcoin-lib/src/base58"
 	"github.com/mutalisk999/bitcoin-lib/src/keyid"
 	"github.com/mutalisk999/bitcoin-lib/src/pubkey"
@@ -174,18 +173,16 @@ type MasterNodeVout struct {
 }
 
 type CoinBaseTransaction struct {
-	BlockTime       uint32
-	BlockHeight     uint32
-	RewardValue     int64
-	MasterNodeVouts []MasterNodeVout
-	CBExtras        string
-	CBAuxFlag       []byte
-	ExtraPayload    []byte
-	VinScript1      []byte
-	VinScript2      []byte
-	VoutScript      []byte
-	CoinBaseTx1     []byte
-	CoinBaseTx2     []byte
+	BlockTime   uint32
+	BlockHeight uint32
+	RewardValue int64
+	CBExtras    string
+	CBAuxFlag   []byte
+	VinScript1  []byte
+	VinScript2  []byte
+	VoutScript  []byte
+	CoinBaseTx1 []byte
+	CoinBaseTx2 []byte
 }
 
 func (t *CoinBaseTransaction) _generateCoinB() error {
@@ -245,25 +242,10 @@ func (t *CoinBaseTransaction) _generateCoinB() error {
 		return err
 	}
 
-	// vout count: 1 + len(t.MasterNodeVouts)
-	err = serialize.PackCompactSize(writer, uint64(1+len(t.MasterNodeVouts)))
+	// vout count: 1
+	err = serialize.PackCompactSize(writer, uint64(1))
 	if err != nil {
 		return err
-	}
-
-	// pack master node vout
-	for _, MasterNodeVout := range t.MasterNodeVouts {
-		err = serialize.PackInt64(writer, MasterNodeVout.Amount)
-		if err != nil {
-			return err
-		}
-
-		var scriptPubKey script.Script
-		scriptPubKey.SetScriptBytes(MasterNodeVout.VoutScript)
-		err = scriptPubKey.Pack(writer)
-		if err != nil {
-			return err
-		}
 	}
 
 	// pack coin base reward vout
@@ -285,20 +267,13 @@ func (t *CoinBaseTransaction) _generateCoinB() error {
 		return err
 	}
 
-	var scriptExtra script.Script
-	scriptExtra.SetScriptBytes(t.ExtraPayload)
-	err = scriptExtra.Pack(writer)
-	if err != nil {
-		return err
-	}
-
 	t.CoinBaseTx2 = bytesBuf.Bytes()
 
 	return nil
 }
 
 func (t *CoinBaseTransaction) Initialize(cbWallet string, bTime uint32, height uint32, value int64, flags string,
-	cbPayload string, cbExtras string, masterNodes []rpc.MasterNode) error {
+	cbExtras string) error {
 	t.BlockTime = bTime
 	t.BlockHeight = height
 	t.RewardValue = value
@@ -308,11 +283,6 @@ func (t *CoinBaseTransaction) Initialize(cbWallet string, bTime uint32, height u
 		return errors.New("hex decode CBAuxFlag error")
 	}
 	t.CBAuxFlag = cbFlag
-	payload, err := hex.DecodeString(cbPayload)
-	if err != nil {
-		return errors.New("hex decode ExtraPayload error")
-	}
-	t.ExtraPayload = payload
 
 	bytes1 := PackNumber(int64(t.BlockHeight))
 	bytes2 := t.CBAuxFlag
@@ -329,16 +299,6 @@ func (t *CoinBaseTransaction) Initialize(cbWallet string, bTime uint32, height u
 	t.VoutScript, err = GetCoinBaseScript(cbWallet)
 	if err != nil {
 		return errors.New("GetCoinBaseScript cbWallet error")
-	}
-
-	for _, masterNode := range masterNodes {
-		var masterNodeVout MasterNodeVout
-		masterNodeVout.Amount = masterNode.Amount
-		masterNodeVout.VoutScript, err = GetCoinBaseScript(masterNode.Payee)
-		if err != nil {
-			return errors.New("GetCoinBaseScript masterNode.Payee error")
-		}
-		t.MasterNodeVouts = append(t.MasterNodeVouts, masterNodeVout)
 	}
 
 	err = t._generateCoinB()
