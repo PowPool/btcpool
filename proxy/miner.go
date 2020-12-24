@@ -3,12 +3,12 @@ package proxy
 import (
 	"bytes"
 	"encoding/hex"
-	"github.com/MiningPool0826/btcpool/bitcoin"
 	. "github.com/MiningPool0826/btcpool/util"
 	"github.com/mutalisk999/bitcoin-lib/src/blob"
 	"github.com/mutalisk999/bitcoin-lib/src/block"
 	"github.com/mutalisk999/bitcoin-lib/src/transaction"
 	"github.com/mutalisk999/bitcoin-lib/src/utility"
+	"github.com/mutalisk999/txid_merkle_tree"
 	"io"
 	"math/big"
 	"strconv"
@@ -177,7 +177,7 @@ func DoubleSha256HashVerify(oBlock *Block) bool {
 	Debug.Printf("block.merkleBranch: %v", oBlock.merkleBranch)
 
 	// get merkle root hash
-	merkleRootHex, err := bitcoin.GetMerkleRootHexFromCoinBaseAndMerkleBranch(cbTrxId.GetHex(), oBlock.merkleBranch)
+	merkleRootHex, err := txid_merkle_tree.GetMerkleRootHexFromCoinBaseAndMerkleBranch(cbTrxId.GetHex(), oBlock.merkleBranch)
 	if err != nil {
 		Error.Println("DoubleSha256HashVerify: GetMerkleRootHexFromCoinBaseAndMerkleBranch error")
 		return false

@@ -9,6 +9,7 @@ import (
 	"github.com/mutalisk999/bitcoin-lib/src/block"
 	"github.com/mutalisk999/bitcoin-lib/src/transaction"
 	"github.com/mutalisk999/bitcoin-lib/src/utility"
+	"github.com/mutalisk999/txid_merkle_tree"
 	"io"
 	"math/big"
 	"strconv"
@@ -112,7 +113,7 @@ func (s *ProxyServer) fetchBlockTemplate() {
 	for _, tx := range blkTplReply.Transactions {
 		newTplJob.TxIdList = append(newTplJob.TxIdList, tx.TxId)
 	}
-	newTplJob.MerkleBranch, err = bitcoin.GetMerkleBranchHexFromTxIdsWithoutCoinBase(newTplJob.TxIdList)
+	newTplJob.MerkleBranch, err = txid_merkle_tree.GetMerkleBranchHexFromTxIdsWithoutCoinBase(newTplJob.TxIdList)
 	if err != nil {
 		Error.Printf("Error while get merkle branch on %s: %s", rpcClient.Name, err)
 		return
@@ -209,7 +210,7 @@ func ConstructRawBlockHex(oBlock *Block, tplJob *BlockTemplateJob, tpl *BlockTem
 	}
 
 	// get merkle root hash
-	merkleRootHex, err := bitcoin.GetMerkleRootHexFromCoinBaseAndMerkleBranch(cbTrxId.GetHex(), oBlock.merkleBranch)
+	merkleRootHex, err := txid_merkle_tree.GetMerkleRootHexFromCoinBaseAndMerkleBranch(cbTrxId.GetHex(), oBlock.merkleBranch)
 	if err != nil {
 		Error.Println("ConstructRawBlockHex: GetMerkleRootHexFromCoinBaseAndMerkleBranch error")
 		return "", err

@@ -89,6 +89,8 @@ github.com/mattn/go-runewidth v0.0.4/go.mod h1:LwmH8dsx7+W8Uxz3IHJYH5QSwggIsqBzp
 github.com/matttproud/golang_protobuf_extensions v1.0.1/go.mod h1:D8He9yQNgCq6Z5Ld7szi9bcBfOoFv/3dc6xSMkL2PC0=
 github.com/mutalisk999/bitcoin-lib v0.0.0-20201203080325-81caed73682f h1:Po0QtqceYE6zA8RdXAqxUPJA5IhvZM7diajDCzFfkvQ=
 github.com/mutalisk999/bitcoin-lib v0.0.0-20201203080325-81caed73682f/go.mod h1:xfIhOTUc+DQBZzjmLWzcQLIu+ZjNBGrEsL3fD/4h3Wg=
+github.com/mutalisk999/txid_merkle_tree v0.0.0-20201224034958-6ecbd0cbe5ee h1:AmwIr1psRroy5ZqdL3m4OoSao1gUfuhP4lDMcO6L9Jg=
+github.com/mutalisk999/txid_merkle_tree v0.0.0-20201224034958-6ecbd0cbe5ee/go.mod h1:7Ca2ocjvOUHc6pdotADAaYO1aijuY2h2SKh2UiLVCGA=
 github.com/naoina/go-stringutil v0.1.0/go.mod h1:XJ2SJL9jCtBh+P9q5btrd/Ylo8XwT/h1USek5+NqSA0=
 github.com/naoina/toml v0.1.2-0.20170918210437-9fafd6967416/go.mod h1:NBIhNtsFMo3G2szEBne+bO4gS192HuIYRqfvOWb4i1E=
 github.com/oklog/ulid v1.3.1/go.mod h1:CirwcVhetQ6Lv90oh/F+FBtV6XMibvdAFo93nm5qn4U=
