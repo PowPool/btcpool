@@ -331,6 +331,8 @@ func (t *CoinBaseTransaction) Initialize(cbWallet string, bTime uint32, height u
 		return errors.New("invalid defaultWitnessCommitmentBytes len")
 	}
 
+	t.DefaultWitnessCommitment = defaultWitnessCommitmentBytes
+
 	err = t._generateCoinB()
 	if err != nil {
 		return errors.New("_generateCoinB error")
