@@ -12,6 +12,7 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"runtime/debug"
 	"syscall"
 	//"github.com/yvasiyarov/gorelic"
 
@@ -216,6 +217,12 @@ func main() {
 	} else {
 		Error.Printf("Backend check reply: %v", pong)
 	}
+
+	defer func() {
+		if r := recover(); r != nil {
+			Error.Println(string(debug.Stack()))
+		}
+	}()
 
 	if cfg.Proxy.Enabled {
 		go startProxy()
