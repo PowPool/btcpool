@@ -7,9 +7,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/MiningPool0826/btcpool/rpc"
-	"github.com/MiningPool0826/btcpool/storage"
-	. "github.com/MiningPool0826/btcpool/util"
+	"github.com/PowPool/btcpool/rpc"
+	"github.com/PowPool/btcpool/storage"
+	. "github.com/PowPool/btcpool/util"
 )
 
 type UnlockerConfig struct {

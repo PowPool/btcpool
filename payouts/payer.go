@@ -3,8 +3,8 @@ package payouts
 import (
 	"time"
 
-	"github.com/MiningPool0826/btcpool/rpc"
-	"github.com/MiningPool0826/btcpool/storage"
+	"github.com/PowPool/btcpool/rpc"
+	"github.com/PowPool/btcpool/storage"
 )
 
 const txCheckInterval = 5 * time.Second
